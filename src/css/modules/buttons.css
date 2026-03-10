@@ -1,0 +1,59 @@
+.c-button {
+  appearance: none;
+  border: 1px solid transparent;
+  border-radius: 999px;
+  padding: var(--space-3) var(--space-4);
+  min-height: 2.625rem;
+  font-weight: 800;
+  letter-spacing: .01em;
+  display: inline-flex;
+  align-items: center;
+  gap: .6rem;
+  cursor: pointer;
+  transition: transform .12s ease, background .12s ease, border-color .12s ease, opacity .12s ease;
+  user-select: none;
+}
+
+.c-button:active {
+  transform: translateY(1px);
+}
+
+.c-button.is-primary {
+  background: var(--red-600);
+  color: white;
+}
+
+.c-button.is-primary:hover {
+  background: color-mix(in oklab, var(--red-600) 88%, black);
+}
+
+/* New: Highlight button (yellow) */
+.c-button.is-highlight {
+  background: var(--yellow-400);
+  color: var(--on-yellow);
+  border-color: color-mix(in oklab, var(--yellow-400) 65%, black);
+}
+
+.c-button.is-highlight:hover {
+  background: color-mix(in oklab, var(--yellow-400) 88%, black);
+}
+
+.c-button.is-tech {
+  background: var(--purple-600);
+  color: white;
+}
+
+.c-button.is-tech:hover {
+  background: color-mix(in oklab, var(--purple-600) 88%, black);
+}
+
+.c-button.is-ghost {
+  background: var(--surface-soft);
+  border-color: var(--glass-border);
+  color: var(--text);
+}
+
+.c-button.is-ghost:hover {
+  background: var(--surface-soft-2);
+}
+

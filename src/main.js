@@ -1,4 +1,4 @@
-import './styles.css';
+import './index.css';
 import 'iconoir/css/iconoir.css';
 
 // Dialog behavior: open from triggers, close on backdrop and restore trigger focus.
@@ -19,7 +19,7 @@ dialogTriggers.forEach((trigger) => {
   });
 });
 
-document.querySelectorAll('.ui-dialog').forEach((dialog) => {
+document.querySelectorAll('[data-dialog]').forEach((dialog) => {
   if (!(dialog instanceof HTMLDialogElement)) {
     return;
   }
@@ -39,15 +39,21 @@ document.querySelectorAll('.ui-dialog').forEach((dialog) => {
 });
 
 // Behavior layer for form UX: live validation, error state mapping and counter updates.
-const form = document.querySelector('.ui-form');
+const form = document.querySelector('[data-form]');
 
 if (form) {
   const counter = form.querySelector('[data-counter]');
   const messageField = form.querySelector('#mensagem');
   const trackedInputs = form.querySelectorAll('input, select, textarea');
 
-  // Each input is wrapped by a container that receives visual state attributes.
+  // Each input is wrapped by a container that receives visual state classes.
   const resolveFieldContainer = (input) => input.closest('[data-field]');
+  const setValidityClass = (field, isValid) => {
+    field.classList.remove('is-valid', 'is-invalid');
+    if (typeof isValid === 'boolean') {
+      field.classList.add(isValid ? 'is-valid' : 'is-invalid');
+    }
+  };
 
   const setFieldState = (input) => {
     const field = resolveFieldContainer(input);
@@ -60,7 +66,7 @@ if (form) {
       // Radio validity is evaluated at group level, then mirrored to each input.
       const group = form.querySelectorAll(`input[name="${input.name}"]`);
       const checked = Array.from(group).some((option) => option.checked);
-      field.dataset.state = checked ? 'valid' : 'invalid';
+      setValidityClass(field, checked);
       group.forEach((option) => {
         option.setAttribute('aria-invalid', checked ? 'false' : 'true');
       });
@@ -69,19 +75,19 @@ if (form) {
 
     if (input.type === 'checkbox') {
       // Checkbox validity depends on checked state only.
-      field.dataset.state = input.checked ? 'valid' : 'invalid';
+      setValidityClass(field, input.checked);
       input.setAttribute('aria-invalid', input.checked ? 'false' : 'true');
       return;
     }
 
     if (!input.required && input.value.trim() === '') {
-      field.dataset.state = '';
+      setValidityClass(field);
       input.removeAttribute('aria-invalid');
       return;
     }
 
     const isValid = input.checkValidity();
-    field.dataset.state = isValid ? 'valid' : 'invalid';
+    setValidityClass(field, isValid);
     input.setAttribute('aria-invalid', isValid ? 'false' : 'true');
   };
 
@@ -137,7 +143,7 @@ if (form) {
       trackedInputs.forEach((input) => {
         const field = resolveFieldContainer(input);
         if (field) {
-          field.dataset.state = '';
+          setValidityClass(field);
         }
       });
       updateCounter();

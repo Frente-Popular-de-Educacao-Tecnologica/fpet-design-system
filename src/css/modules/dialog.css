@@ -1,0 +1,91 @@
+.c-dialog {
+  width: min(42rem, calc(100% - 2rem));
+  margin: auto;
+  padding: 0;
+  border: 1px solid var(--glass-border);
+  border-radius: var(--radius-xl);
+  background: color-mix(in oklab, var(--surface) 92%, var(--ink-950) 8%);
+  color: var(--text);
+  box-shadow: 0 30px 70px rgba(0, 0, 0, .45);
+}
+
+.c-dialog::backdrop {
+  background: color-mix(in oklab, var(--ink-950) 65%, transparent);
+  backdrop-filter: blur(2px);
+}
+
+.c-dialog-shell {
+  display: grid;
+  gap: var(--space-5);
+  padding: var(--space-5);
+}
+
+.c-dialog-head {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: var(--space-4);
+}
+
+.c-dialog-title {
+  margin: 0;
+  font-size: 1.15rem;
+  letter-spacing: -0.01em;
+}
+
+.c-dialog-subtitle {
+  margin: var(--space-2) 0 0;
+  color: var(--muted);
+  font-size: .9rem;
+}
+
+.c-dialog-close {
+  width: 2.25rem;
+  height: 2.25rem;
+  border-radius: 999px;
+  border: 1px solid var(--glass-border);
+  background: var(--surface-soft);
+  color: var(--text);
+  font-size: 1.25rem;
+  line-height: 1;
+  display: inline-grid;
+  place-items: center;
+  cursor: pointer;
+}
+
+.c-dialog-close:hover {
+  background: var(--surface-soft-2);
+}
+
+.c-dialog-close:focus-visible {
+  outline: 2px solid color-mix(in oklab, var(--purple-600) 68%, white 32%);
+  outline-offset: 2px;
+}
+
+.c-dialog-body {
+  display: grid;
+  gap: var(--space-3);
+}
+
+.c-dialog-grid {
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+}
+
+.c-dialog-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-3);
+  justify-content: flex-end;
+}
+
+@media (max-width: 700px) {
+  .c-dialog-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .c-dialog-actions .c-button {
+    flex: 1;
+    justify-content: center;
+  }
+}
+

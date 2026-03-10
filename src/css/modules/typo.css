@@ -1,0 +1,57 @@
+.c-type-sample h1,
+.c-type-sample h2,
+.c-type-sample h3,
+.c-type-sample p {
+  margin: 0;
+}
+
+.c-type-sample {
+  display: grid;
+  gap: var(--space-4);
+}
+
+h3 {
+  margin: 0;
+  font-size: 1.1rem;
+  letter-spacing: -0.01em;
+}
+
+.u-text-small {
+  font-size: .95rem;
+  color: var(--muted);
+}
+
+.c-icon-inline {
+  font-size: 1rem;
+  line-height: 1;
+  flex-shrink: 0;
+}
+
+.c-mono {
+  font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+  color: color-mix(in oklab, var(--snow-50) 84%, var(--slate-700) 16%);
+  font-size: .95rem;
+}
+
+.c-mono-head {
+  color: var(--snippet-title);
+  font-weight: 700;
+}
+
+.c-mono-cmd {
+  margin-top: var(--space-2);
+  color: var(--snippet-command);
+}
+
+.c-mono-item-1 {
+  color: var(--snippet-item-1);
+}
+
+.c-mono-item-2 {
+  color: var(--snippet-item-2);
+}
+
+.c-mono-item-3 {
+  color: var(--snippet-item-3);
+}
+

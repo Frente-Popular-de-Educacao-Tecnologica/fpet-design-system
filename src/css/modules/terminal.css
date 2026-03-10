@@ -1,0 +1,55 @@
+.c-eyebrow {
+  display: inline-flex;
+  gap: .5rem;
+  align-items: center;
+  padding: .35rem .7rem;
+  border-radius: 999px;
+  background: var(--surface-soft);
+  border: 1px solid var(--glass-border);
+  color: var(--muted);
+  font-weight: 700;
+  letter-spacing: .02em;
+  width: fit-content;
+}
+
+h1 {
+  margin: var(--space-3) 0 var(--space-2);
+  font-size: clamp(2rem, 2.6vw + 1rem, 3.3rem);
+  line-height: 1.05;
+  letter-spacing: -0.03em;
+}
+
+.c-lead {
+  color: var(--muted);
+  font-size: 1.05rem;
+  max-width: 68ch;
+  margin: 0 0 var(--space-6);
+}
+
+.c-terminal {
+  font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+  background: var(--surface-strong);
+  border: 1px solid var(--glass-border);
+  border-radius: var(--radius-xl);
+  padding: var(--space-5);
+  box-shadow: var(--shadow);
+  display: grid;
+  gap: var(--space-2);
+}
+
+.c-terminal .c-terminal-line {
+  color: var(--terminal-line);
+}
+
+.c-terminal .c-terminal-prompt {
+  color: var(--terminal-prompt);
+}
+
+.c-terminal .c-terminal-ok {
+  color: var(--terminal-ok);
+}
+
+.c-terminal .c-terminal-warn {
+  color: var(--terminal-warn);
+}
+

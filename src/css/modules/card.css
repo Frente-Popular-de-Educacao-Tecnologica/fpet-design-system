@@ -1,0 +1,14 @@
+.c-card {
+  background: color-mix(in oklab, var(--surface) 88%, var(--ink-950) 12%);
+  border: 1px solid var(--glass-border);
+  border-radius: var(--radius-xl);
+  padding: var(--space-card);
+  box-shadow: 0 10px 30px rgba(0, 0, 0, .25);
+}
+
+.c-card.is-soft {
+  background: color-mix(in oklab, var(--surface-soft) 86%, transparent);
+  border: 1px solid var(--line-subtle);
+  box-shadow: none;
+}
+

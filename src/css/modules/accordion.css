@@ -1,0 +1,81 @@
+.c-accordion-group {
+  display: grid;
+  gap: var(--space-3);
+}
+
+
+
+.c-accordion {
+  border: 1px solid var(--glass-border);
+  border-radius: var(--radius-lg);
+  background: color-mix(in oklab, var(--surface-soft) 82%, transparent);
+  overflow: clip;
+  transition: border-color .12s ease, background-color .12s ease, box-shadow .12s ease;
+}
+
+.c-accordion:hover {
+  border-color: color-mix(in oklab, var(--text) 28%, var(--glass-border) 72%);
+  background: color-mix(in oklab, var(--surface-soft-2) 68%, transparent);
+}
+
+.c-accordion:focus-within {
+  border-color: color-mix(in oklab, var(--purple-600) 64%, transparent);
+  box-shadow: 0 0 0 4px color-mix(in oklab, var(--purple-600) 18%, transparent);
+}
+
+.c-accordion summary {
+  list-style: none;
+  cursor: pointer;
+  font-weight: 800;
+  color: var(--text);
+  padding: var(--space-4);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-3);
+  transition: background-color .12s ease, color .12s ease;
+}
+
+.c-accordion summary:hover {
+  background: color-mix(in oklab, var(--surface-soft-2) 78%, transparent);
+}
+
+.c-accordion summary:focus-visible {
+  outline: 2px solid color-mix(in oklab, var(--purple-600) 68%, white 32%);
+  outline-offset: 2px;
+  background: color-mix(in oklab, var(--surface-soft-2) 82%, transparent);
+}
+
+.c-accordion summary::-webkit-details-marker {
+  display: none;
+}
+
+.c-accordion summary::after {
+  content: "+";
+  font-weight: 900;
+  line-height: 1;
+  color: var(--muted);
+  transition: color .12s ease;
+}
+
+.c-accordion summary:hover::after,
+.c-accordion summary:focus-visible::after {
+  color: var(--text);
+}
+
+.c-accordion[open] summary::after {
+  content: "−";
+}
+
+.c-accordion[open] summary {
+  border-bottom: 1px solid var(--line-subtle);
+}
+
+.c-accordion-body {
+  padding: 0 var(--space-4) var(--space-4);
+  border-top: 1px solid var(--line-subtle);
+}
+
+.c-accordion-body .u-text-small {
+  margin: var(--space-3) 0 0;
+}

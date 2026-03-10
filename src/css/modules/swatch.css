@@ -1,0 +1,29 @@
+.c-swatch {
+  border-radius: var(--radius-xl);
+  border: 1px solid var(--glass-border);
+  overflow: hidden;
+  background: var(--surface-strong);
+}
+
+.c-swatch .c-top {
+  height: 90px;
+}
+
+.c-swatch .c-meta {
+  padding: var(--space-4);
+  display: flex;
+  justify-content: space-between;
+  gap: var(--s-3);
+  align-items: center;
+}
+
+.c-swatch .c-name {
+  font-weight: 800;
+}
+
+.c-swatch code {
+  font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+  font-size: .9rem;
+  color: var(--muted);
+}
+

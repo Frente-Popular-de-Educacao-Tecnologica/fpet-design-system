@@ -1,0 +1,104 @@
+.c-certificate {
+  border: 1px solid var(--glass-border);
+  border-radius: var(--radius-xl);
+  padding: var(--space-6);
+  background:
+    linear-gradient(160deg,
+      color-mix(in oklab, var(--surface) 90%, var(--yellow-400) 10%) 0%,
+      color-mix(in oklab, var(--surface-2) 92%, var(--purple-600) 8%) 100%);
+  display: grid;
+  gap: var(--space-5);
+}
+
+.c-certificate-head {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: var(--space-4);
+  flex-wrap: wrap;
+}
+
+.c-certificate-chip {
+  display: inline-flex;
+  align-items: center;
+  gap: .35rem;
+  padding: .35rem .7rem;
+  border-radius: 999px;
+  font-weight: 800;
+  font-size: .78rem;
+  background: color-mix(in oklab, var(--yellow-400) 36%, white 64%);
+  color: color-mix(in oklab, var(--yellow-400) 30%, black 70%);
+  border: 1px solid color-mix(in oklab, var(--yellow-400) 65%, black 35%);
+  text-transform: uppercase;
+  letter-spacing: .03em;
+}
+
+.c-certificate-org {
+  font-weight: 900;
+  letter-spacing: .01em;
+  font-size: 1.1rem;
+}
+
+.c-certificate-title {
+  margin: 0;
+  font-size: clamp(1.2rem, 1vw + 1rem, 1.8rem);
+  line-height: 1.15;
+  letter-spacing: -0.02em;
+  text-align: center;
+}
+
+.c-certificate-body {
+  display: grid;
+  gap: var(--space-2);
+  text-align: center;
+}
+
+.c-certificate-name {
+  margin: 0;
+  font-size: clamp(1.35rem, 1.4vw + 1rem, 2rem);
+  font-weight: 900;
+  letter-spacing: -0.02em;
+  color: color-mix(in oklab, var(--purple-600) 70%, var(--text) 30%);
+}
+
+.c-certificate-course {
+  margin: 0;
+  color: var(--muted);
+  font-weight: 700;
+}
+
+.c-certificate-meta {
+  display: grid;
+  gap: var(--space-3);
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+}
+
+.c-certificate-meta .c-kpi {
+  justify-content: center;
+}
+
+.c-certificate-signatures {
+  display: grid;
+  gap: var(--space-4);
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  margin-top: var(--space-2);
+}
+
+.c-certificate-signature {
+  border-top: 1px solid var(--line-subtle);
+  padding-top: var(--space-2);
+  font-size: .88rem;
+  color: var(--muted);
+  text-align: center;
+}
+
+@media (max-width: 700px) {
+  .c-certificate-meta {
+    grid-template-columns: 1fr;
+  }
+
+  .c-certificate-signatures {
+    grid-template-columns: 1fr;
+  }
+}
+
