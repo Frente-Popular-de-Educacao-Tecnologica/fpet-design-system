@@ -2,180 +2,218 @@
 
 ## 1. Visão Geral
 
-O projeto `fpet-design-system` é uma aplicação frontend estática (SPA de página única) para consolidar:
+O `fpet-design-system` é uma aplicação frontend estática (SPA de página única) para consolidar:
 
-- tokens visuais
+- design tokens
 - componentes reutilizáveis
 - padrões de acessibilidade
-- exemplos de uso para comunicação digital institucional
+- exemplos de uso institucional
 
 Stack principal:
 
 - Vite 7
 - HTML5 sem framework
-- CSS moderno (custom properties, `color-mix`, media queries)
-- JavaScript vanilla (módulos ES)
+- CSS moderno (`custom properties`, `color-mix`, media queries)
+- JavaScript vanilla (ES modules)
 - Iconoir (iconografia)
 
-## 2. Arquitetura e Estrutura
+## 2. Arquitetura Atual
 
-Estrutura atual:
+Estrutura relevante:
 
 ```text
 .
 |-- index.html
 |-- src/
+|   |-- index.css
 |   |-- main.js
-|   `-- styles.css
-|-- public/
-|   |-- robots.txt
-|   `-- vite.svg
+|   `-- css/
+|       `-- modules/
+|           |-- tokens.css
+|           |-- base.css
+|           |-- grid.css
+|           |-- hero.css
+|           |-- breadcrumb.css
+|           |-- terminal.css
+|           |-- section.css
+|           |-- card.css
+|           |-- swatch.css
+|           |-- typo.css
+|           |-- buttons.css
+|           |-- badge.css
+|           |-- accordion.css
+|           |-- dialog.css
+|           |-- form.css
+|           |-- certificate.css
+|           |-- course.css
+|           |-- footer.css
+|           `-- a11y.css
 |-- docs/
 |   `-- DOCUMENTACAO-TECNICA.md
+|-- public/
 |-- package.json
-|-- eslint.config.js
-|-- README.md
-`-- LICENSE.md
+`-- eslint.config.js
 ```
 
 Responsabilidades:
 
-- `index.html`: estrutura semântica da página e markup dos componentes.
-- `src/styles.css`: design tokens, temas, componentes e responsividade.
-- `src/main.js`: comportamento interativo (diálogos e formulário).
-- `public/robots.txt`: diretivas de rastreamento para buscadores.
+- `index.html`: estrutura semântica e exemplos de componentes.
+- `src/index.css`: ponto único de entrada de estilos; importa os módulos em ordem de dependência.
+- `src/css/modules/*.css`: estilos segmentados por domínio/componente.
+- `src/main.js`: comportamento de diálogo e formulário (acessível).
 
 ## 3. Pipeline de Execução
 
-Scripts (package.json):
+Scripts (`package.json`):
 
-- `npm run dev`: servidor local com HMR.
-- `npm run build`: build de produção para `dist/`.
-- `npm run preview`: preview da build.
-- `npm run lint`: análise estática com ESLint.
-- `npm run lint:fix`: correção automática suportada pelo ESLint.
+- `npm run start`: inicia Vite em modo dev
+- `npm run dev`: inicia Vite em modo dev
+- `npm run build`: build de produção para `dist/`
+- `npm run preview`: preview da build
+- `npm run lint`: análise estática com ESLint
+- `npm run lint:fix`: correções automáticas do ESLint
 
 Requisitos:
 
 - Node.js >= 18
 - npm >= 9
 
-## 4. Sistema de Tema
+## 4. Contrato de CSS
 
-O projeto utiliza tema claro/escuro automático com base em preferências do sistema:
+### 4.1 Ponto único de import
 
-- CSS: `@media (prefers-color-scheme: light)`
-- HTML:
-  - `meta name="color-scheme" content="light dark"`
-- `meta name="theme-color"` para dark e light
+`src/main.js` importa apenas:
 
-Tokens base:
+- `import './index.css';`
 
-- cores de marca: vermelho, amarelo, roxo
-- neutros: ink, slate, snow
-- derivados: `--bg`, `--surface`, `--text`, `--muted`, etc.
+`src/index.css` agrega todos os módulos.
 
-## 5. Sistema de Espaçamento
+### 4.2 Convenção de classes
 
-Escala fluida inspirada em 8pt:
+Padrão adotado:
 
-- `--space-1` até `--space-12` com `clamp()`
-- tokens semânticos:
-  - `--space-wrap-x`, `--space-wrap-y`
-  - `--space-section-y`
-  - `--space-card`, `--space-grid`, `--space-stack`, `--space-row`
+- `c-*`: componente (`c-button`, `c-badge`, `c-dialog`)
+- `l-*`: layout (`l-wrap`, `l-grid`, `l-row`, `l-stack`)
+- `u-*`: utilitário (`u-mt-4`, `u-spacer-6`, `u-text-small`)
+- `is-*`: estado/modificador (`is-primary`, `is-soft`, `is-valid`, `is-invalid`)
 
-Observação:
+Sem aliases legados: o HTML já usa exclusivamente o novo padrão.
 
-- aliases `--s-*` foram mantidos para compatibilidade retroativa.
+### 4.3 Organização dos módulos
 
-## 6. Componentes Implementados
+Ordem atual de import no `src/index.css`:
 
-Principais blocos no design system:
+1. `tokens.css`
+2. `base.css`
+3. `grid.css`
+4. `hero.css`
+5. `breadcrumb.css`
+6. `terminal.css`
+7. `section.css`
+8. `card.css`
+9. `swatch.css`
+10. `typo.css`
+11. `buttons.css`
+12. `badge.css`
+13. `accordion.css`
+14. `dialog.css`
+15. `form.css`
+16. `certificate.css`
+17. `course.css`
+18. `footer.css`
+19. `a11y.css`
 
-- navegacao + hero
+## 5. Sistema de Tema e Tokens
+
+O projeto usa tema claro/escuro automático:
+
+- `meta name="color-scheme" content="light dark"`
+- `@media (prefers-color-scheme: light)` em `tokens.css`
+
+Tokens principais:
+
+- marca: `--red-600`, `--yellow-400`, `--purple-600`
+- neutros: `--ink-950`, `--slate-700`, `--snow-50`
+- semânticos: `--bg`, `--surface`, `--text`, `--muted`, `--glass-border`, `--line-subtle`
+- espaçamento fluido: `--space-1` a `--space-12` (+ aliases `--s-*`)
+
+## 6. JavaScript e Acessibilidade
+
+### 6.1 Diálogos
+
+Implementado em `src/main.js` com:
+
+- gatilho por `data-open-dialog`
+- alvo por `id` do `dialog`
+- identificação de diálogos por `[data-dialog]`
+- fechamento ao clicar no backdrop
+- restauração de foco no gatilho ao fechar
+
+### 6.2 Formulário
+
+Implementado em `src/main.js` com:
+
+- seleção do formulário por `[data-form]`
+- identificação de campos por `[data-field]`
+- contador por `[data-counter]`
+- validação em `blur`, `input`, `change` e `submit`
+- atualização de `aria-invalid`
+- estados visuais por classe: `is-valid` / `is-invalid`
+- foco no primeiro campo inválido
+- reset dos estados após `reset`
+
+### 6.3 Práticas de acessibilidade aplicadas
+
+- landmarks semânticos (`header`, `main`, `section`, `footer`, `nav`)
+- skip link (`.c-skip-link`)
+- foco visível com `:focus-visible`
+- redução de movimento em `a11y.css` (`prefers-reduced-motion`)
+- contraste orientado por tokens
+
+## 7. Componentes Disponíveis
+
+Domínios presentes no design system:
+
+- navegação e hero
+- breadcrumbs
+- terminal/snippet
 - paleta de cores (swatches)
 - tipografia (sans + mono)
-- botoes e badges
-- breadcrumbs
-- accordions (FAQ com `details/summary`)
-- modais/dialogos (elemento nativo `dialog`)
-- formulários com validação assistida
-- certificado de conclusao
-- cards de cursos
-- rodape
+- botões e badges
+- accordion (`details/summary`)
+- dialogs (`<dialog>`)
+- formulário validado
+- certificado
+- cards de curso
+- footer
 
-## 7. Iconografia
+## 8. Iconografia
 
-Integração via dependência `iconoir`:
+Dependência:
 
-- import em `src/main.js`:
-  - `import 'iconoir/css/iconoir.css';`
-- uso no HTML via classes `iconoir-*`.
+- `iconoir`
 
-## 8. Acessibilidade
+Uso:
 
-Práticas aplicadas:
+- import em `src/main.js`: `import 'iconoir/css/iconoir.css';`
+- classes no HTML: `iconoir-*`
 
-- linguagem definida (`lang="pt-BR"`)
-- landmarks semânticos (`header`, `main`, `section`, `footer`, `nav`)
-- skip link para pular ao conteúdo principal
-- foco visível com `:focus-visible`
-- suporte a `prefers-reduced-motion`
-- formulário com:
-  - `label` associado a campos
-  - `aria-describedby` para ajuda/erro
-  - `aria-invalid` atualizado via JS
-  - foco no primeiro campo inválido no submit
-  - `reportValidity()` para mensagens nativas
+## 9. Convenções de Evolução
 
-## 9. JavaScript (src/main.js)
+Para adicionar ou alterar componentes:
 
-Blocos de comportamento:
-
-1. Diálogos
-- abre modal a partir de gatilhos `data-open-dialog`
-- fecha ao clicar no backdrop
-- devolve foco ao botão que abriu
-
-2. Formulário
-- valida em `blur`, `input` e `change`
-- aplica estados visuais (`data-state="valid|invalid"`)
-- sincroniza contador de caracteres da mensagem
-- bloqueia submit inválido e direciona foco
-- reseta estados após `reset`
-
-## 10. SEO e Metadados
-
-Itens já configurados:
-
-- `meta description`
-- `robots.txt` com política aberta:
-  - `User-agent: *`
-  - `Allow: /`
-
-## 11. Convenções de Código
-
-- padrão de commits: Conventional Commits
-- linting: ESLint (flat config)
-- arquitetura simples e sem dependência de framework UI
-- preferência por CSS tokenizado e classes reutilizáveis
-
-## 12. Guia de Evolução
-
-Para adicionar novo componente ao design system:
-
-1. Definir objetivo e variantes no `index.html`.
-2. Reutilizar tokens existentes em `src/styles.css`.
-3. Evitar inline style, preferir classes semânticas.
-4. Garantir estado de foco, responsividade e contraste.
-5. Se houver interação, implementar em `src/main.js` com acessibilidade.
-6. Validar com:
+1. Manter a convenção de naming (`c-`, `l-`, `u-`, `is-`).
+2. Criar/editar módulo em `src/css/modules` conforme domínio.
+3. Registrar o módulo em `src/index.css` respeitando ordem de dependência.
+4. Reutilizar tokens existentes antes de criar novos.
+5. Garantir estados de foco, hover e contraste mínimo acessível.
+6. Para interações, usar `data-*` no HTML e lógica em `src/main.js`.
+7. Validar com:
    - `npm run lint`
    - `npm run build`
 
-## 13. Riscos Técnicos Atuais
+## 10. Riscos Técnicos e Atenções
 
-- uso intensivo de `color-mix` pode ter variação de renderização entre engines.
-- volume de CSS único tende a crescer; no médio prazo pode ser útil modularizar por domínio (base, layout, componentes).
-- `dialog` é nativo, mas vale manter teste cruzado em navegadores alvo do projeto.
+- `color-mix()` pode variar levemente entre engines.
+- `<dialog>` é nativo; manter validação cruzada nos navegadores alvo.
+- Mudanças de naming em massa devem preservar o contrato JS baseado em `data-*`.
