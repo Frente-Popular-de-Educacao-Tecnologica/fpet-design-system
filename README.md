@@ -48,8 +48,20 @@ Aplicação em desenvolvimento: `http://localhost:5173`
 .
 |-- index.html
 |-- src/
+|   |-- index.css
 |   |-- main.js
-|   `-- styles.css
+|   |-- js/
+|   |   |-- app.js
+|   |   `-- modules/
+|   |       |-- dialog/
+|   |       |   `-- dialogModule.js
+|   |       |-- form/
+|   |       |   |-- formModule.js
+|   |       |   `-- counterController.js
+|   |       `-- shared/
+|   |           `-- formFieldState.js
+|   `-- css/
+|       `-- modules/
 |-- public/
 |-- package.json
 |-- LICENSE.md
@@ -72,8 +84,9 @@ Aplicação em desenvolvimento: `http://localhost:5173`
 - Importado em `src/main.js`:
 
 ```js
-import './styles.css';
+import './index.css';
 import 'iconoir/css/iconoir.css';
+import { initializeApp } from './js/app.js';
 ```
 
 - Utilização por classes `iconoir-*` no HTML (ex.: `iconoir-clock`, `iconoir-calendar`, `iconoir-badge-check`)

@@ -27,6 +27,16 @@ Estrutura relevante:
 |-- src/
 |   |-- index.css
 |   |-- main.js
+|   |-- js/
+|   |   |-- app.js
+|   |   `-- modules/
+|   |       |-- dialog/
+|   |       |   `-- dialogModule.js
+|   |       |-- form/
+|   |       |   |-- formModule.js
+|   |       |   `-- counterController.js
+|   |       `-- shared/
+|   |           `-- formFieldState.js
 |   `-- css/
 |       `-- modules/
 |           |-- tokens.css
@@ -60,7 +70,12 @@ Responsabilidades:
 - `index.html`: estrutura semântica e exemplos de componentes.
 - `src/index.css`: ponto único de entrada de estilos; importa os módulos em ordem de dependência.
 - `src/css/modules/*.css`: estilos segmentados por domínio/componente.
-- `src/main.js`: comportamento de diálogo e formulário (acessível).
+- `src/main.js`: ponto de entrada da aplicação (imports globais + bootstrap).
+- `src/js/app.js`: orquestra os módulos de interface.
+- `src/js/modules/dialog/dialogModule.js`: regras de diálogo e gestão de foco.
+- `src/js/modules/form/formModule.js`: eventos e ciclo de validação do formulário.
+- `src/js/modules/shared/formFieldState.js`: estado visual/ARIA dos campos.
+- `src/js/modules/form/counterController.js`: contador de caracteres do campo de mensagem.
 
 ## 3. Pipeline de Execução
 
@@ -82,9 +97,11 @@ Requisitos:
 
 ### 4.1 Ponto único de import
 
-`src/main.js` importa apenas:
+`src/main.js` importa:
 
 - `import './index.css';`
+- `import 'iconoir/css/iconoir.css';`
+- `import { initializeApp } from './js/app.js';`
 
 `src/index.css` agrega todos os módulos.
 
@@ -141,7 +158,7 @@ Tokens principais:
 
 ### 6.1 Diálogos
 
-Implementado em `src/main.js` com:
+Implementado em `src/js/modules/dialog/dialogModule.js` com:
 
 - gatilho por `data-open-dialog`
 - alvo por `id` do `dialog`
@@ -151,7 +168,7 @@ Implementado em `src/main.js` com:
 
 ### 6.2 Formulário
 
-Implementado em `src/main.js` com:
+Implementado em `src/js/modules/form/formModule.js` e `src/js/modules/shared/formFieldState.js` com:
 
 - seleção do formulário por `[data-form]`
 - identificação de campos por `[data-field]`
@@ -169,6 +186,13 @@ Implementado em `src/main.js` com:
 - foco visível com `:focus-visible`
 - redução de movimento em `a11y.css` (`prefers-reduced-motion`)
 - contraste orientado por tokens
+
+### 6.4 Organização com princípios SOLID
+
+- **SRP (Single Responsibility)**: cada módulo possui responsabilidade única (`dialog`, `form`, `field state`, `counter`).
+- **OCP (Open/Closed)**: novos comportamentos podem ser adicionados criando módulos novos e registrando em `app.js`, sem alterar módulos estáveis.
+- **LSP/ISP**: módulos expõem interfaces pequenas (`init*`, `setFieldState`, `updateCounter`) e reutilizáveis.
+- **DIP (Dependency Inversion)**: inicializadores aceitam dependências por parâmetro (`root`, `form`), reduzindo acoplamento com globais.
 
 ## 7. Componentes Disponíveis
 
@@ -207,7 +231,7 @@ Para adicionar ou alterar componentes:
 3. Registrar o módulo em `src/index.css` respeitando ordem de dependência.
 4. Reutilizar tokens existentes antes de criar novos.
 5. Garantir estados de foco, hover e contraste mínimo acessível.
-6. Para interações, usar `data-*` no HTML e lógica em `src/main.js`.
+6. Para interações, usar `data-*` no HTML e lógica em `src/js/modules`.
 7. Validar com:
    - `npm run lint`
    - `npm run build`
